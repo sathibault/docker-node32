@@ -14,6 +14,11 @@ RUN set -ex \
 ENV NODE_VERSION 0.10.40
 ENV NPM_VERSION 2.14.1
 
+# Configure OS to run 32 bit executables
+RUN dpkg --add-architecture i386 \
+	&& apt-get update \
+	&& apt-get -y install libc6:i386 libncurses5:i386 libstdc++6:i386
+
 RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x86.tar.gz" \
 	&& curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
 	&& gpg --verify SHASUMS256.txt.asc \
